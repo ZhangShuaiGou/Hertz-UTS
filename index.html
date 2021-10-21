@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--<meta http-equiv="Content-Type" content="text/html; charset=utf-8">-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <title>Hertz-UTS</title>
+
+    <script language="javascript" type="text/javascript">
+        function resizeIframe(iframe) {
+            iframe.style.height = iframe.contentWindow.document.body.scrollHeight + 'px';
+        }
+    </script>
+</head>
+<body>
+<nav class="navbar fixed-top navbar-dark bg-dark text-center">
+     <a class="navbar-brand" href="index.html">
+    <img src="HertzUTS.png" width="150" height="60" alt="Go home page">
+     </a>      &nbsp;
+     <h3 style="color:white;"> Car Rental Center </h3>
+    
+    <div class="">
+        
+    </div>
+    <a href="car_reservation.php" target="mainFrame" class="btn btn-primary">Car Reservation</a>
+</nav>
+
+<iframe name="mainFrame" id="mainFrame" frameborder="0" scrolling="no" onload='javascript:resizeIframe(this);'
+        style="border-style: none; width: 100%; margin-top: 85px;"
+        src="car_rental_center.html"></iframe>
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <!-- Vue.js library-->
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    
+</head>
+<body onload="getCars();">
+<div class="container">
+    <br>
+    <div id="showcars" class="row">
+        <div class="col-md-3" v-for="car in cars">
+            <div class="card">                
+                <img v-bind:src="'images/'+car.Model+'.jpg'" class="card-img-top img-fluid" style="height: 200px;">
+                <div class="card-body" >
+                    <h5 class="card-title">{{car.Brand}}-{{car.Model}}-{{car.Year}}</h5>
+                    <ul class="list-unstyled">
+                        <li class="card-text"><b>mileage: </b>{{car.Mileage}}</li>
+                        <li class="card-text"><b>fuel type: </b>{{car.FuelType}}</li>
+                        <li class="card-text"><b>seats: </b>{{car.Seats}}</li>
+                        <li class="card-text"><b>price per day: </b>${{car.PricePerDay}}</li>
+                        <li class="card-text"><b>availability: </b>{{car.Availability}}</li>
+                        <li class="card-text"><b>description: </b>{{car.Description}}</li>
+                    </ul>
+                </div>
+                <a href="#" v-on:click="addToCart(car.id);" class="btn btn-primary">Add to Cart</a>
+            </div>
+            <br>
+        </div>
+    </div>
+</div>
+        <script type="text/javascript">
+        var xhttp;
+        xhttp = new XMLHttpRequest();
+        var garage = [];
+
+        function getCars() {
+                xhttp.open("get", "cars.xml", true);
+                xhttp.onreadystatechange = function () {
+                    if (xhttp.readyState == 4 && xhttp.status == 200) {
+                        var carList = xhttp.responseXML.getElementsByTagName('item');
+                        for (var i = 0; i < carList.length; i++) {
+                            var carItem = {};
+                            carItem['Category'] = carList.Category;
+                            for (var j = 0; j < carList[i].childNodes.length; j++) {
+                                carItem[carList[i].childNodes[j].nodeName] = carList[i].childNodes[j].innerHTML;
+                            }
+                            garage.push(carItem);
+                        }
+                    }
+                };
+                xhttp.send();
+        }
+        
+        var cars = new Vue({
+            el: '#showcars',
+            data: {
+                cars: garage
+            },
+            updated: function() {
+                window.parent.document.getElementById("mainFrame").style.height = document.body.scrollHeight + "px";
+            },
+            methods: {
+                addToCart: function (id) {
+                        xhttp.open('get', 'checkAvailability.php?id=' + id,true);
+                        xhttp.onreadystatechange = function () {
+                            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                                if (xhttp.responseText == "True") {
+                                    alert("Add to the cart successfully.");
+                                } else {
+                                    alert("Sorry, the car is not available now. Please try other cars.");
+                                }               
+                            }
+                        };
+                        xhttp.send();      
+                }
+            }
+        }); 
+    </script>
+
+</body>
